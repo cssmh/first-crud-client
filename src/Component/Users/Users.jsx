@@ -1,6 +1,6 @@
-import { useLoaderData } from "react-router-dom";
-import Navbar from "../Navbar/Navbar";
+import { Link, useLoaderData } from "react-router-dom";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 const Users = () => {
   let count = 0;
@@ -15,17 +15,16 @@ const Users = () => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        const filterData = allUser.filter((soloData) => soloData._id !== idx);
-        setAllUser(filterData);
         if (data.deletedCount > 0) {
-          alert("User deleted successfully");
+          toast.success("User deleted successfully");
+          const filterData = allUser.filter((soloData) => soloData._id !== idx);
+          setAllUser(filterData);
         }
       });
   };
 
   return (
     <div>
-      <Navbar></Navbar>
       <p className="text-center my-4 font-semibold text-xl">
         Total Users {allUser.length}
       </p>
@@ -34,6 +33,9 @@ const Users = () => {
           <p key={data._id}>
             {(count += 1)}. {data.name} : {data.email},{" "}
             <span className="text-green-500">{data._id}</span>{" "}
+            <Link to={`/update/${data._id}`}>
+              <button className="btn btn-secondary mr-1">Update</button>
+            </Link>
             <button
               onClick={() => handleDelete(data._id)}
               className="btn btn-accent text-white"

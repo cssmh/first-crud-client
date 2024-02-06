@@ -42,12 +42,10 @@ const Navbar = () => {
         <a className="btn btn-ghost text-xl">CRUD</a>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {allNav}
-        </ul>
+        <ul className="menu menu-horizontal px-1">{allNav}</ul>
       </div>
       <div className="navbar-end">
-        <a className="btn">Home</a>
+        <NavLink to={"/"}> <button className="btn btn-outline">Home</button> </NavLink>
       </div>
     </div>
   );

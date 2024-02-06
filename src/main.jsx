@@ -1,20 +1,34 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import MainLayout from "./MainLayout/MainLayout";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Home from "./Home/Home";
 import "./index.css";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Users from "./Component/Users/Users";
+import Update from "./Component/Update/Update";
+import MainLayout from "./MainLayout/MainLayout";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <MainLayout></MainLayout>,
-  },
-  {
-    path: "/users",
-    element: <Users></Users>,
-    loader: ()=> fetch("http://localhost:5000/users")
+    children: [
+      {
+        path: "/",
+        element: <Home></Home>,
+      },
+      {
+        path: "/users",
+        element: <Users></Users>,
+        loader: () => fetch("http://localhost:5000/users"),
+      },
+      {
+        path: "/update/:id",
+        element: <Update></Update>,
+        loader: ({ params }) =>
+          fetch(`http://localhost:5000/update/${params.id}`),
+      },
+    ],
   },
 ]);
 
